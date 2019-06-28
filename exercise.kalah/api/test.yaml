@@ -1,0 +1,831 @@
+swagger: '2.0'
+info:
+  description: Api Documentation
+  version: '1.0'
+  title: Api Documentation
+  termsOfService: 'urn:tos'
+  contact: {}
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0'
+host: cqi-prgapb.ite-intra-ams.af-klm.com
+basePath: /cqi
+tags:
+  - name: asset-controller
+    description: Asset Controller
+  - name: basic-error-controller
+    description: Basic Error Controller
+  - name: checklist-controller
+    description: Checklist Controller
+  - name: delivery-controller
+    description: Delivery Controller
+  - name: file-upload-controller
+    description: File Upload Controller
+  - name: inspection-controller
+    description: Inspection Controller
+paths:
+  /delivery/upload/:
+    post:
+      tags:
+        - file-upload-controller
+      summary: handleFileUpload
+      operationId: handleFileUploadUsingPOST
+      consumes:
+        - multipart/form-data
+      produces:
+        - '*/*'
+      parameters:
+        - name: file
+          in: formData
+          description: file
+          required: true
+          type: file
+        - name: flashAttributes
+          in: query
+          required: false
+          type: integer
+        - name: type
+          in: query
+          description: type
+          required: true
+          type: string
+          enum:
+            - DELIVERIES
+            - REGISTRATION
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  /error:
+    get:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingGET
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ModelAndView'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    head:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingHEAD
+      consumes:
+        - application/json
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ModelAndView'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      deprecated: false
+    post:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    put:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ModelAndView'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    delete:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingDELETE
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ModelAndView'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      deprecated: false
+    options:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingOPTIONS
+      consumes:
+        - application/json
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ModelAndView'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      deprecated: false
+    patch:
+      tags:
+        - basic-error-controller
+      summary: errorHtml
+      operationId: errorHtmlUsingPATCH
+      consumes:
+        - application/json
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ModelAndView'
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      deprecated: false
+  /report/export:
+    post:
+      tags:
+        - file-upload-controller
+      summary: handleFileUpload
+      operationId: handleFileUploadUsingPOST_1
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: endDate
+          in: query
+          description: endDate
+          required: true
+          type: string
+          format: date
+        - name: flashAttributes
+          in: query
+          required: false
+          type: integer
+        - name: startDate
+          in: query
+          description: startDate
+          required: true
+          type: string
+          format: date
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/{groundProcessId}/assets/{assetId}':
+    get:
+      tags:
+        - asset-controller
+      summary: getAsset
+      operationId: getAssetUsingGET
+      produces:
+        - application/json
+      parameters:
+        - name: assetId
+          in: path
+          description: assetId
+          required: true
+          type: string
+        - name: groundProcessId
+          in: path
+          description: groundProcessId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/AssetDto'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/{groundProcessId}/checklists/{deliveryId}':
+    get:
+      tags:
+        - checklist-controller
+      summary: retrieveChecklistById
+      operationId: retrieveChecklistByIdUsingGET
+      produces:
+        - application/json
+      parameters:
+        - name: deliveryId
+          in: path
+          description: deliveryId
+          required: true
+          type: string
+        - name: groundProcessId
+          in: path
+          description: groundProcessId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Checklist'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/{groundProcessId}/deliveries':
+    get:
+      tags:
+        - delivery-controller
+      summary: retrieveDeliveryList
+      operationId: retrieveDeliveryListUsingGET
+      produces:
+        - application/json
+      parameters:
+        - name: groundProcessId
+          in: path
+          description: groundProcessId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/DeliverylistDto'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+    post:
+      tags:
+        - delivery-controller
+      summary: addDelivery
+      operationId: addDeliveryUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: deliveryDto
+          description: deliveryDto
+          required: true
+          schema:
+            $ref: '#/definitions/DeliveryDto'
+        - name: groundProcessId
+          in: path
+          description: groundProcessId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/DeliveryDto'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/{groundProcessId}/deliveries/{deliveryId}':
+    put:
+      tags:
+        - delivery-controller
+      summary: updateDelivery
+      operationId: updateDeliveryUsingPUT
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - in: body
+          name: deliveryDto
+          description: deliveryDto
+          required: true
+          schema:
+            $ref: '#/definitions/DeliveryDto'
+        - name: deliveryId
+          in: path
+          description: deliveryId
+          required: true
+          type: string
+          format: uuid
+        - name: groundProcessId
+          in: path
+          description: groundProcessId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/DeliveryDto'
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+  '/{groundProcessId}/inspections':
+    post:
+      tags:
+        - inspection-controller
+      summary: inspection
+      operationId: inspectionUsingPOST
+      consumes:
+        - application/json
+      produces:
+        - '*/*'
+      parameters:
+        - name: groundProcessId
+          in: path
+          description: groundProcessId
+          required: true
+          type: string
+        - in: body
+          name: inspectionResultDto
+          description: inspectionResultDto
+          required: true
+          schema:
+            $ref: '#/definitions/InspectionResultDto'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      deprecated: false
+definitions:
+  AssetDto:
+    type: object
+    properties:
+      fleet:
+        type: string
+        enum:
+          - KL_KLC
+          - KL_ICA
+          - KL_EUR
+      id:
+        type: string
+      subType:
+        type: string
+      type:
+        type: string
+        enum:
+          - AIRCRAFT
+    title: AssetDto
+  Checklist:
+    type: object
+    properties:
+      _links:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/LinkDto'
+      checklistCategories:
+        type: array
+        items:
+          $ref: '#/definitions/ChecklistCategory'
+      deliveryId:
+        type: string
+      id:
+        type: string
+    title: Checklist
+  ChecklistCategory:
+    type: object
+    properties:
+      checklistItems:
+        type: array
+        items:
+          $ref: '#/definitions/ChecklistItem'
+      deliveryPart:
+        type: string
+      displayOrder:
+        type: integer
+        format: int32
+      id:
+        type: string
+      location:
+        type: string
+      name:
+        type: string
+    title: ChecklistCategory
+  ChecklistItem:
+    type: object
+    properties:
+      displayOrder:
+        type: integer
+        format: int32
+      findingsDescription:
+        type: string
+      id:
+        type: string
+      itemDescription:
+        type: string
+      selectionOptions:
+        type: string
+    title: ChecklistItem
+  DeliveryDto:
+    type: object
+    properties:
+      _links:
+        type: object
+      additionalProperties:
+          $ref: '#/definitions/LinkDto'
+      adHoc:
+        type: boolean
+      assets:
+        type: array
+        items:
+          $ref: '#/definitions/AssetDto'
+      deliveryParts:
+        type: array
+        items:
+          $ref: '#/definitions/DeliveryPartDto'
+      deliveryTime:
+        type: string
+        format: date-time
+      groundProcesses:
+        type: array
+        items:
+          $ref: '#/definitions/GroundProcessDto'
+      id:
+        type: string
+        format: uuid
+      location:
+        type: string
+      status:
+        type: string
+        enum:
+          - UNFINISHED
+          - DELAYED
+          - FINISHED
+      subSubType:
+        type: string
+        enum:
+          - REGULAR
+          - FA
+          - FA_SHORT
+          - FC
+          - FD
+      subType:
+        type: string
+        enum:
+          - TURNAROUND
+          - PARTIAL_DEEPCLEAN
+          - DEEPCLEAN
+          - NIGHTSTOP
+          - NA
+      tasks:
+        type: array
+        items:
+          $ref: '#/definitions/TaskDto'
+        minItems: 1
+        maxItems: 10
+      type:
+        type: string
+        enum:
+          - CLEANING
+          - INSPECTION
+          - TOWING
+    required:
+     - _links      
+    title: DeliveryDto
+  DeliveryPartDto:
+    type: object
+    properties:
+      categories:
+        type: array
+        items:
+          type: string
+      id:
+        type: string
+      name:
+        type: string
+    title: DeliveryPartDto
+  DeliverylistDto:
+    type: object
+    properties:
+      _links:
+        type: object
+        additionalProperties:
+          $ref: '#/definitions/LinkDto'
+      deliveries:
+        type: array
+        items:
+          $ref: '#/definitions/DeliveryDto'
+    title: DeliverylistDto
+  GroundProcessDto:
+    type: object
+    properties:
+      endTime:
+        type: string
+        format: date-time
+      id:
+        type: string
+      startTime:
+        type: string
+        format: date-time
+      towingEndPosition:
+        type: string
+      towingStartPosition:
+        type: string
+      turnaround:
+        $ref: '#/definitions/TurnaroundDto'
+      type:
+        type: string
+        enum:
+          - BAGGAGE_HANDLING
+          - PASSENGER_HANDLING
+          - CATERING
+          - CARGO
+          - TOWING
+          - PUSH_BACK
+          - WATER
+          - TOILET
+          - CLEANING
+          - FUEL_HANDLING
+          - CABIN_SUPPLY
+          - CABIN_CHECK
+          - DE_ICING
+          - INSPECTION
+    title: GroundProcessDto
+  InspectionResultCategoryDto:
+    type: object
+    properties:
+      checklistCategoryId:
+        type: string
+      inspectionResultItems:
+        type: array
+        items:
+          $ref: '#/definitions/InspectionResultItemDto'
+      location:
+        type: string
+      status:
+        type: string
+        enum:
+          - SKIPPED
+          - COMPLETED
+    title: InspectionResultCategoryDto
+  InspectionResultDto:
+    type: object
+    properties:
+      checklistId:
+        type: string
+      deliveryTime:
+        type: string
+        format: date-time
+      executedBy:
+        type: string
+      inspectionResultCategories:
+        type: array
+        items:
+          $ref: '#/definitions/InspectionResultCategoryDto'
+    title: InspectionResultDto
+  InspectionResultItemDto:
+    type: object
+    properties:
+      checklistItemId:
+        type: string
+      inspectionFinding:
+        type: string
+    title: InspectionResultItemDto
+  LegDto:
+    type: object
+    properties:
+      boardingTimeEstimated:
+        type: string
+        format: date-time
+      boardingTimeScheduled:
+        type: string
+        format: date-time
+      id:
+        type: string
+    title: LegDto
+  LinkDto:
+    type: object
+    properties:
+      href:
+        type: string
+      templated:
+        type: boolean
+    title: LinkDto
+  ModelAndView:
+    type: object
+    properties:
+      empty:
+        type: boolean
+      model:
+        type: object
+      modelMap:
+        type: object
+        additionalProperties:
+          type: object
+      reference:
+        type: boolean
+      status:
+        type: string
+        enum:
+          - '100'
+          - '101'
+          - '102'
+          - '103'
+          - '200'
+          - '201'
+          - '202'
+          - '203'
+          - '204'
+          - '205'
+          - '206'
+          - '207'
+          - '208'
+          - '226'
+          - '300'
+          - '301'
+          - '302'
+          - '303'
+          - '304'
+          - '305'
+          - '307'
+          - '308'
+          - '400'
+          - '401'
+          - '402'
+          - '403'
+          - '404'
+          - '405'
+          - '406'
+          - '407'
+          - '408'
+          - '409'
+          - '410'
+          - '411'
+          - '412'
+          - '413'
+          - '414'
+          - '415'
+          - '416'
+          - '417'
+          - '418'
+          - '419'
+          - '420'
+          - '421'
+          - '422'
+          - '423'
+          - '424'
+          - '426'
+          - '428'
+          - '429'
+          - '431'
+          - '451'
+          - '500'
+          - '501'
+          - '502'
+          - '503'
+          - '504'
+          - '505'
+          - '506'
+          - '507'
+          - '508'
+          - '509'
+          - '510'
+          - '511'
+      view:
+        $ref: '#/definitions/View'
+      viewName:
+        type: string
+    title: ModelAndView
+  TaskDto:
+    type: object
+    properties:
+      endTime:
+        type: string
+        format: date-time
+      executedBy:
+        type: string
+      id:
+        type: string
+      location:
+        type: string
+      startTime:
+        type: string
+        format: date-time
+      status:
+        type: string
+      type:
+        type: string
+    title: TaskDto
+  TurnaroundDto:
+    type: object
+    properties:
+      arrivalLeg:
+        $ref: '#/definitions/LegDto'
+      departureLeg:
+        $ref: '#/definitions/LegDto'
+    title: TurnaroundDto
+  View:
+    type: object
+    properties:
+      contentType:
+        type: string
+    title: View
